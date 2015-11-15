@@ -251,6 +251,10 @@ var PhotoView = Backbone.View.extend({
     this.rect.attr({'fill': 'white', 'opacity': 0});
     this.rect.animate({'opacity': 1}, duration, ">")
   },
+  
+  playSayCheese: function(){
+    $('#say-cheese')[0].play();
+  },
 
   flashEnd: function(duration) {
     if (duration === undefined) { duration = 200; }

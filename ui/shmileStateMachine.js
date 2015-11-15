@@ -55,6 +55,7 @@ var ShmileStateMachine = function(photoView, socket, appState, config, buttonVie
         cheeseCb = function() {
           self.photoView.modalMessage('Cheese!', self.config.cheese_delay);
           self.photoView.flashStart();
+          self.photoView.playSayCheese();
           self.socket.emit('snap', true);
         }
         CameraUtils.snap(self.appState.current_frame_idx, cheeseCb);

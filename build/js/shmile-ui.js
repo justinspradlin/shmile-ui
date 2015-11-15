@@ -131,6 +131,7 @@ var ShmileStateMachine = function(photoView, socket, appState, config, buttonVie
         cheeseCb = function() {
           self.photoView.modalMessage('Cheese!', self.config.cheese_delay);
           self.photoView.flashStart();
+          self.photoView.playSayCheese();
           self.socket.emit('snap', true);
         }
         CameraUtils.snap(self.appState.current_frame_idx, cheeseCb);
@@ -517,6 +518,10 @@ var PhotoView = Backbone.View.extend({
     this.rect.attr({'fill': 'white', 'opacity': 0});
     this.rect.animate({'opacity': 1}, duration, ">")
   },
+  
+  playSayCheese: function(){
+    $('#say-cheese')[0].play();
+  },
 
   flashEnd: function(duration) {
     if (duration === undefined) { duration = 200; }
@@ -616,6 +621,13 @@ ButtonView.prototype.render = function() {
     var button = $(e.currentTarget);
     button.fadeOut(1000);
     $(document).trigger('ui_button_pressed');
+    
+    // Force loading of the say-cheese audio
+    // This is a hack to load sound on safari on iPad
+    // http://www.ibm.com/developerworks/library/wa-ioshtml5/
+    // must be initiated via user input (click)
+    $('#say-cheese')[0].play(); 
+    $('#say-cheese')[0].pause(); 
   });
 
   $(document).bind('ui_button_pressed', function() {
